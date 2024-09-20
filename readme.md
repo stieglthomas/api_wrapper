@@ -1,5 +1,6 @@
 ## Wrapper
 - [Home Assistant](https://developers.home-assistant.io/docs/api/rest/)
+- [Groq](https://console.groq.com/docs/quickstart)
 
 ## Installing
 ```sh
