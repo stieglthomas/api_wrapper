@@ -1,3 +1,4 @@
-from HassAPI import HassAPI
+from .HassAPI import HassAPI
+from .GroqAPI import GroqAPI
 
-__all__ = ["HassAPI"]
+__all__ = ["HassAPI", "GroqAPI"]
