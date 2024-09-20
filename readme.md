@@ -1,3 +1,6 @@
+## Wrapper
+- [Home Assistant](https://developers.home-assistant.io/docs/api/rest/)
+
 ## Installing
 ```sh
 pip install git+https://github.com/stieglthomas/api_wrapper.git

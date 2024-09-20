@@ -1,1 +1,3 @@
-__all__ = []
+from HassAPI import HassAPI
+
+__all__ = ["HassAPI"]
