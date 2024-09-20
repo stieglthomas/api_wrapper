@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
-def read_requirements():
-    with open('requirements.txt') as f:
-        return f.read().splitlines()
+requirements = [
+    "requests"
+]
 
 setup(
     name="api_wrapper",
@@ -12,7 +12,7 @@ setup(
     author_email="contact@stieglthomas.de",
     url="https://github.com/stieglthomas/api_wrapper",
     packages=find_packages(),
-    install_requires=read_requirements(),
+    install_requires=requirements,
     classifiers=[
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
