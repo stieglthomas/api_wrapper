@@ -62,7 +62,7 @@ class HassAPI:
         return response
 
 
-    def fire_event(self, event_name:str, **kwargs):
+    def fire_event(self, event_name:str, event_data:dict={}):
         url = f"{self.base_url}/events/{event_name}"
-        response = requests.post(url, headers=self.headers, json=kwargs)
+        response = requests.post(url, headers=self.headers, json=event_data)
         return response.json()
