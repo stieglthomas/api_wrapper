@@ -83,19 +83,19 @@ class TickTickAPI:
             'Authorization': f'Bearer {access_token}',
             'Content-Type': 'application/json'
         }
-        self.root = "https://api.ticktick.com"
+        self.base_url = "https://api.ticktick.com"
 
     ## Projects
 
     def get_projects(self):
-        response = requests.get(self.root + '/open/v1/project', headers=self.headers)
+        response = requests.get(self.base_url + '/open/v1/project', headers=self.headers)
         if response.status_code >= 300:
             raise ApiException(f'Failed to get projects: {response.text}')
         return response.json()
     
 
     def get_project(self, project_id:str):
-        response = requests.get(self.root + f'/open/v1/project/{project_id}/data', headers=self.headers)
+        response = requests.get(self.base_url + f'/open/v1/project/{project_id}/data', headers=self.headers)
         if response.status_code >= 300:
             raise ApiException(f'Failed to get project: {response.text}')
         return response.json()
@@ -109,7 +109,7 @@ class TickTickAPI:
         }
         if color:
             data['color'] = color
-        response = requests.post(self.root + '/open/v1/project', headers=self.headers, json=data)
+        response = requests.post(self.base_url + '/open/v1/project', headers=self.headers, json=data)
         if response.status_code >= 300:
             raise ApiException(f'Failed to create project: {response.text}')
         return response.json()
@@ -124,14 +124,14 @@ class TickTickAPI:
             data['kind'] = kind
         if viewMode:
             data['viewMode'] = viewMode
-        response = requests.post(self.root + f'/open/v1/project/{project_id}', headers=self.headers, json=data)
+        response = requests.post(self.base_url + f'/open/v1/project/{project_id}', headers=self.headers, json=data)
         if response.status_code >= 300:
             raise ApiException(f'Failed to update project: {response.text}')
         return response.json()
     
 
     def delete_project(self, project_id:str):
-        response = requests.delete(self.root + f'/open/v1/project/{project_id}', headers=self.headers)
+        response = requests.delete(self.base_url + f'/open/v1/project/{project_id}', headers=self.headers)
         if response.status_code >= 300:
             raise ApiException(f'Failed to delete project: {response.text}')
         return response.json()
@@ -148,7 +148,7 @@ class TickTickAPI:
     
 
     def get_task(self, project_id:str, task_id:str):
-        response = requests.get(self.root + f'/open/v1/project/{project_id}/task/{task_id}', headers=self.headers)
+        response = requests.get(self.base_url + f'/open/v1/project/{project_id}/task/{task_id}', headers=self.headers)
         if response.status_code >= 300:
             raise ApiException(f'Failed to get task: {response.text}')
         return response.json()
@@ -205,7 +205,7 @@ class TickTickAPI:
             data['sortOrder'] = sortOrder
         if parentId:
             data['parentId'] = parentId
-        response = requests.post(self.root + f'/open/v1/task', headers=self.headers, json=data)
+        response = requests.post(self.base_url + f'/open/v1/task', headers=self.headers, json=data)
         if response.status_code >= 300:
             raise ApiException(f'Failed to create task: {response.text}')
         return response.json()
@@ -255,21 +255,21 @@ class TickTickAPI:
             data['priority'] = TaskPriority_Map.get(priority, priority)
         if items:
             data['items'] = items
-        response = requests.post(self.root + f'/open/v1/task/{task_id}', headers=self.headers, json=data)
+        response = requests.post(self.base_url + f'/open/v1/task/{task_id}', headers=self.headers, json=data)
         if response.status_code >= 300:
             raise ApiException(f'Failed to update task: {response.text}')
         return response.json()
 
 
     def delete_task(self, project_id:str, task_id:str):
-        response = requests.delete(self.root + f'/open/v1/project/{project_id}/task/{task_id}', headers=self.headers)
+        response = requests.delete(self.base_url + f'/open/v1/project/{project_id}/task/{task_id}', headers=self.headers)
         if response.status_code >= 300:
             raise Exception(f'Failed to delete task: {response.text}')
         return response.json()
 
 
     def complete_task(self, project_id:str, task_id:str):
-        response = requests.post(self.root + f'/open/v1/project/{project_id}/task/{task_id}/complete', headers=self.headers)
+        response = requests.post(self.base_url + f'/open/v1/project/{project_id}/task/{task_id}/complete', headers=self.headers)
         if response.status_code >= 300:
             raise ApiException(f'Failed to complete task: {response.text}')
         return {'status': 'success'}
@@ -324,7 +324,7 @@ class TickTickAPI:
         except Exception as e:
             raise ApiException(f'Failed to complete checklist items: {e}')
 
- 
+
     def delete_checklist_item(self, project_id:str, task_id:str, item_id:list=None):
         try:
             items = self.get_checklist_items(project_id, task_id)
