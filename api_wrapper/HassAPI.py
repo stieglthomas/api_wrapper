@@ -17,7 +17,7 @@ class HassAPI:
     def get_state(self, entity_id:str):
         url = f"{self.base_url}/states/{entity_id}"
         response = requests.get(url, headers=self.headers)
-        if response.status_code != 200:
+        if response.status_code >= 300:
             raise ApiException(f'Failed to get state of "{entity_id}": {response.text}')
         response = response.json()
         if entity_id.split('.')[0] == 'light':
@@ -38,7 +38,7 @@ class HassAPI:
                 entity_id = f"{domain}.{entity_id.rsplit('.', 1)[-1]}"
             service_data['entity_id'] = entity_id
         response = requests.post(url, headers=self.headers, json=service_data)
-        if response.status_code != 200:
+        if response.status_code >= 300:
             raise ApiException(f'Failed to call service "{service}": {response.text}')
         return response.json()
     

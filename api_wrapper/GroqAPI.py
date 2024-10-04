@@ -19,7 +19,7 @@ class GroqAPI:
     def get_models(self):
         url = f"{self.root_url}/models"
         response = requests.get(url, headers=self.headers)
-        if response.status_code != 200:
+        if response.status_code >= 300:
             raise ApiException(f'Failed to get models: {response.text}')
         return response.json()
 
@@ -40,6 +40,6 @@ class GroqAPI:
             **({'max_tokens': max_tokens or self.max_tokens} if max_tokens or self.max_tokens else {})
         }
         response = requests.post(url, headers=self.headers, json=data)
-        if response.status_code != 200:
+        if response.status_code >= 300:
             raise ApiException(f'Failed to get chat completion: {response.text}')
         return response.json()

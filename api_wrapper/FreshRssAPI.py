@@ -16,7 +16,7 @@ class FreshRssAPI:
     
     def get_starred_item_ids(self):
         response = requests.post(f"{self.base_url}&saved_item_ids", data=self.payload)
-        if response.status_code != 200:
+        if response.status_code >= 300:
             raise ApiException(f'Failed to get saved item IDs: {response.text}')
         data = response.json()
         items = data["saved_item_ids"]
@@ -25,7 +25,7 @@ class FreshRssAPI:
     
     def get_feeds(self):
         response = requests.post(f"{self.base_url}&feeds", data=self.payload)
-        if response.status_code != 200:
+        if response.status_code >= 300:
             raise ApiException(f'Failed to get feeds: {response.text}')
         data = response.json()
         feed_groups = data["feeds_groups"]
@@ -36,7 +36,7 @@ class FreshRssAPI:
     
     def get_categories(self):
         response = requests.post(f"{self.base_url}&groups", data=self.payload)
-        if response.status_code != 200:
+        if response.status_code >= 300:
             raise ApiException(f'Failed to get categories: {response.text}')
         data = response.json()
         feed_groups = data["feeds_groups"]
@@ -59,7 +59,7 @@ class FreshRssAPI:
             url += f"&group_ids={category_ids}"
 
         response = requests.post(url, data=self.payload)
-        if response.status_code != 200:
+        if response.status_code >= 300:
             raise ApiException(f'Failed to get feed items: {response.text}')
         data = response.json()
         if read == True:
@@ -80,7 +80,7 @@ class FreshRssAPI:
         if type(item_id) != int and type(item_id) != str:
             item_id = ",".join(map(str, item_id))
         response = requests.post(f"{self.base_url}&items&with_ids={item_id}", data=self.payload)
-        if response.status_code != 200:
+        if response.status_code >= 300:
             raise ApiException(f'Failed to get item details: {response.text}')
         data = response.json()
         if len(data["items"]) > 0:
@@ -91,24 +91,24 @@ class FreshRssAPI:
     
     def mark_item_as_read(self, item_id:int):
         response = requests.post(f"{self.base_url}&mark=item&as=read&id={item_id}", data=self.payload)
-        if response.status_code != 200:
+        if response.status_code >= 300:
             raise ApiException(f'Failed to mark item as read: {response.text}')
         return response.json()
     
     def mark_item_as_unread(self, item_id:int):
         response = requests.post(f"{self.base_url}&mark=item&as=unread&id={item_id}", data=self.payload)
-        if response.status_code != 200:
+        if response.status_code >= 300:
             raise ApiException(f'Failed to mark item as unread: {response.text}')
         return response.json()
     
     def mark_item_as_starred(self, item_id:int):
         response = requests.post(f"{self.base_url}&mark=item&as=saved&id={item_id}", data=self.payload)
-        if response.status_code != 200:
+        if response.status_code >= 300:
             raise ApiException(f'Failed to mark item as starred: {response.text}')
         return response.json()
     
     def mark_item_as_unstarred(self, item_id:int):
         response = requests.post(f"{self.base_url}&mark=item&as=unsaved&id={item_id}", data=self.payload)
-        if response.status_code != 200:
+        if response.status_code >= 300:
             raise ApiException(f'Failed to mark item as unstarred: {response.text}')
         return response.json()
