@@ -1,5 +1,8 @@
 # https://developers.home-assistant.io/docs/api/rest/
 import requests
+from .utils import ApiException
+
+ApiException.set_api_name("HassAPI")
 
 class HassAPI:
     def __init__(self, base_url:str, api_token:str):
@@ -15,7 +18,7 @@ class HassAPI:
         url = f"{self.base_url}/states/{entity_id}"
         response = requests.get(url, headers=self.headers)
         if response.status_code != 200:
-            raise Exception(f'[HassAPI] {response.text}')
+            raise ApiException(f'Failed to get state of "{entity_id}": {response.text}')
         response = response.json()
         if entity_id.split('.')[0] == 'light':
             try:
@@ -36,7 +39,7 @@ class HassAPI:
             service_data['entity_id'] = entity_id
         response = requests.post(url, headers=self.headers, json=service_data)
         if response.status_code != 200:
-            raise Exception(f'[HassAPI] {response.text}')
+            raise ApiException(f'Failed to call service "{service}": {response.text}')
         return response.json()
     
 
@@ -58,7 +61,7 @@ class HassAPI:
             scene_name = f"scene.{scene_name}"
         response = self.call_service("scene.turn_on", entity_id=scene_name)
         if response == []:
-            raise Exception(f'[HassAPI] "{scene_name}" not found')
+            raise ApiException(f'Scene "{scene_name}" not found')
         return response
 
 
