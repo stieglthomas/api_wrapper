@@ -5,10 +5,10 @@ from .utils import ApiException
 ApiException.set_api_name("GroqAPI")
 
 class GroqAPI:
-    def __init__(self, api_token:str, standard_model_id:str=None, standard_temperature:float=None, standard_max_tokens:int=None):
+    def __init__(self, access_token:str, standard_model_id:str=None, standard_temperature:float=None, standard_max_tokens:int=None):
         self.root_url = "https://api.groq.com/openai/v1"
         self.headers = {
-            'Authorization': f'Bearer {api_token}',
+            'Authorization': f'Bearer {access_token}',
             'Content-Type': 'application/json'
         }
         self.model_id = standard_model_id

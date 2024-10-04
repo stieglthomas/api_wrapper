@@ -5,11 +5,11 @@ from .utils import ApiException
 ApiException.set_api_name("HassAPI")
 
 class HassAPI:
-    def __init__(self, base_url:str, api_token:str):
+    def __init__(self, base_url:str, access_token:str):
         base_url = base_url.removesuffix('/api/')
         self.base_url = f'{base_url}/api'
         self.headers = {
-            "Authorization": f"Bearer {api_token}",
+            "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
         }
 
