@@ -13,3 +13,8 @@ class ApiException(Exception):
         if self._api_name is None:
             raise Exception(self.message)
         raise Exception (f"\033[94m[{self._api_name}]\033[0m {self.message}")
+    
+    class MissingAccessToken(Exception):
+        def __init__(self, auth_class):
+            message = f"Please provide an access token. You can get one by using the '{auth_class}' class."
+            super().__init__(ApiException(message))
