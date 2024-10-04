@@ -1,5 +1,6 @@
 from .HassAPI import HassAPI
 from .GroqAPI import GroqAPI
 from .FreshRssAPI import FreshRssAPI
+from .TickTickAPI import TickTickAPI
 
-__all__ = ["HassAPI", "GroqAPI", "FreshRssAPI"]
+__all__ = ["HassAPI", "GroqAPI", "FreshRssAPI", "TickTickAPI"]
