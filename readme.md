@@ -4,12 +4,12 @@
 
 ## Installing
 ```sh
-pip install git+https://github.com/stieglthomas/api_wrapper.git
+pip install git+https://github.com/stieglthomas/python-api_wrapper.git
 ```
 
 ### Upgrading
 ```sh
-pip install --upgrade git+https://github.com/stieglthomas/api_wrapper.git
+pip install --upgrade git+https://github.com/stieglthomas/python-api_wrapper.git
 ```
 
 ### Using
