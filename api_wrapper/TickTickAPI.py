@@ -34,7 +34,7 @@ ChecklistItemStatus_Map = {
 
 
 class TickTickAPI:
-    class Auth:
+    class OAuth:
         def __init__(self, client_id:str, client_secret:str, redirect_uri:str, scopes:list =["read", "write"]):
             self.client_id = client_id
             self.client_secret = client_secret
@@ -78,7 +78,7 @@ class TickTickAPI:
 
     def __init__(self, access_token:str=None):
         if access_token == None:
-            raise ApiException.MissingAccessToken('TickTickAPI.Auth')
+            raise ApiException.MissingAccessToken('TickTickAPI.OAuth')
         self.headers = {
             'Authorization': f'Bearer {access_token}',
             'Content-Type': 'application/json'
