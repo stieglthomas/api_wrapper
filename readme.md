@@ -3,7 +3,7 @@
 - [Groq](https://console.groq.com/docs/quickstart)
 - [FreshRSS](https://freshrss.github.io/FreshRSS/en/developers/06_Fever_API.html)
 - [TickTick](https://developer.ticktick.com/)
-- [PocketAPI](https://getpocket.com/developer/docs/)
+- [Pocket](https://getpocket.com/developer/docs/)
 
 ## Installing
 ```sh

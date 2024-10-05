@@ -7,7 +7,7 @@ from .utils import ApiException
 
 ApiException.set_api_name("PocketAPI")
 
-ItemState = Literal["unread", "archive", "all"]
+ItemState = Literal["unread", "archive", "all", "all_and_deleted"]
 ItemTag = Literal["__untagged__"]
 ItemContentType = Literal["article", "video", "image"]
 ItemSort = Literal["newest", "oldest", "title", "site"]
@@ -91,13 +91,14 @@ class PocketAPI:
         if count > 30:
             raise ApiException("The maximum number of items to retrieve is 30.")
         data = {
-            "state": state,
+            "state": "all" if state == "all_and_deleted" else state,
             "sort": sort,
             "detailType": detailType,
             "count": count,
             "offset": offset
         }
         if favorite is not None:
+            favorite = "1" if favorite else "0"
             data["favorite"] = favorite
         if tag:
             data["tag"] = tag
@@ -113,7 +114,15 @@ class PocketAPI:
         response = requests.post(self.base_url + "/get", json=data)
         if response.status_code >= 300:
             raise ApiException(f"Failed to get items: {response.text}")
-        return response.json()
+        response = response.json()
+        if state == "all":
+            item_list = {}
+            for item_id, item in response["list"].items():
+                if item["status"] == "2":
+                    continue
+                item_list[item_id] = item
+            response["list"] = item_list
+        return response
     
 
     def add_item(self, url:str, title:str=None, tags:list[str]=None):
